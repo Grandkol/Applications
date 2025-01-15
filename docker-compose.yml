@@ -1,0 +1,43 @@
+services:
+  applications:
+    build: ./application_service
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+
+  db:
+    image: postgres:16
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_DB=$DB_NAME
+
+  kafka-0:
+    extends:
+      service: kafka-0
+      file: docker-compose_kafka.yml
+
+  kafka-1:
+    extends:
+      service: kafka-1
+      file: docker-compose_kafka.yml
+
+  kafka-2:
+    extends:
+      service: kafka-2
+      file: docker-compose_kafka.yml
+
+  kafka-ui:
+    extends:
+      service: ui
+      file: docker-compose_kafka.yml
+
+volumes:
+  kafka_0_data:
+  kafka_1_data:
+  kafka_2_data:
