@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     project_name: str = Field("Application", alias="PROJECT_NAME")
     kafka_host: str = Field("kafka-0", alias="KAFKA_HOST")
     kafka_port: str = Field("9094", alias="KAFKA_PORT")
+    kafka_topic:str = Field("secret", alias="KAFKA_TOPIC")
+    kafka_key: str = Field("secret", alias="KAFKA_KEY")
 
     db: DatabaseConfig = DatabaseConfig()
 

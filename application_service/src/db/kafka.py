@@ -21,7 +21,7 @@ class KafkaController:
     async  def kafka_send(self, topic, value, key):
         self.producer.send(
             topic=topic,
-            value=value.encode('ascii'),
+            value=value,
             key=key.encode('ascii'),
         )
         rep = 'Thanks for information'
