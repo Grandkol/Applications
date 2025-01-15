@@ -19,6 +19,8 @@ class DatabaseConfig(BaseSettings):
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file="../.env", env_file_encoding="utf-8")
     project_name: str = Field("Application", alias="PROJECT_NAME")
+    kafka_host: str = Field("kafka-0", alias="KAFKA_HOST")
+    kafka_port: str = Field("9094", alias="KAFKA_PORT")
 
     db: DatabaseConfig = DatabaseConfig()
 
