@@ -18,7 +18,7 @@ class DatabaseConfig(BaseSettings):
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file="../.env", env_file_encoding="utf-8")
-    project_name: str = Field("Auth", alias="PROJECT_NAME")
+    project_name: str = Field("Application", alias="PROJECT_NAME")
 
     db: DatabaseConfig = DatabaseConfig()
 
