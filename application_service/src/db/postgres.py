@@ -1,9 +1,12 @@
 from collections.abc import AsyncGenerator
 
 from core import settings
-from models.base import Base
-from sqlalchemy.ext.asyncio import (AsyncEngine, AsyncSession,
-                                    async_sessionmaker, create_async_engine)
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 
 
 class DatabaseHelper:

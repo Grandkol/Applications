@@ -2,8 +2,9 @@ from http import HTTPStatus
 from typing import Annotated
 import json
 
+from fastapi_pagination import paginate, Page
 from fastapi.encoders import jsonable_encoder
-from fastapi import APIRouter, Depends, HTTPException, Request, Query
+from fastapi import APIRouter, Depends, Query
 from schemas import ApplicationToBD, ApplicationInBd
 from sqlalchemy.ext.asyncio import AsyncSession
 from db import db_helper, kafka_controller
@@ -16,7 +17,9 @@ router = APIRouter()
 
 
 @router.post(
-    "/applications", response_model=ApplicationInBd, status_code=HTTPStatus.CREATED
+    "/applications",
+    response_model=ApplicationInBd,
+    status_code=HTTPStatus.CREATED
 )
 async def create_application(
     application: ApplicationToBD,
@@ -44,18 +47,13 @@ async def create_application(
 
 
 @router.get("/applications", status_code=HTTPStatus.OK)
-async def create_application(
+async def get_application(
         session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
         user_name: Annotated[
             str | None, Query(description="Query to find user applications")
         ] = None,
-        page_size: Annotated[
-            int, Query(description="Amount of applications at single page", ge=1)
-        ] = None,
-        page_number: Annotated[int, Query(description="Page number", ge=1)] = None,
-):
+) -> Page[ApplicationInBd]:
     app = await _get_applications(session=session,
-                                  user_name=user_name,
-                                  page_size=page_size,
-                                  page_number=page_number)
-    return app
+                                  user_name=user_name)
+
+    return paginate(app)
