@@ -16,6 +16,6 @@ class Base(DeclarativeBase):
 
 class Application(Base):
     __tablename__ = "application"
-    user_name: Mapped[str] = mapped_column(nullable=True)
-    description: Mapped[str] = mapped_column(nullable=True)
+    user_name: Mapped[str] = mapped_column(nullable=False)
+    description: Mapped[str] = mapped_column(nullable=False)
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)

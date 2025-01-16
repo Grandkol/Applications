@@ -11,7 +11,7 @@
 4. После запуска вы сможете найти сервисы по следующим адреса:
 - FastAPI swagger: `http://localhost:8000/app/openapi`
 - Kafka ui: `http://localhost:8080`
-- PostgresSQL: необходимо будет скачать dbeaver/pgadmin и ввести там данные БД.
+- PostgreSQL: необходимо будет скачать dbeaver/pgadmin и ввести там данные БД.
 
 После всех этих шагов вы сможете свободно пользоваться сервисом заявок.
 

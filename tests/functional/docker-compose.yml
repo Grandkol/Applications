@@ -1,0 +1,68 @@
+services:
+
+  application:
+    container_name: application
+    build: ../../application_service
+    image: application
+    restart: always
+    env_file:
+      - ../../.env
+    ports:
+      - 8000:8000
+    depends_on:
+      db:
+        condition: service_healthy
+
+  tests:
+      image: application
+      working_dir: /
+      entrypoint: >
+        sh -c "pip install -r /tests/functional/requirements.txt
+        && pytest  /tests/functional -vvv -s"
+      volumes:
+        - ..:/tests
+      env_file:
+        - ../../.env
+      depends_on:
+        application:
+          condition: service_started
+
+  db:
+    image: postgres:16
+    ports:
+      - 5432:5432
+    env_file:
+      - ../../.env
+    environment:
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_DB=$DB_NAME
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $DB_NAME -U postgres" ]
+      interval: 5s
+      timeout: 1s
+      retries: 5
+
+  kafka-0:
+    extends:
+      service: kafka-0
+      file: ../../docker-compose_kafka.yml
+
+  kafka-1:
+    extends:
+      service: kafka-1
+      file: ../../docker-compose_kafka.yml
+
+  kafka-2:
+    extends:
+      service: kafka-2
+      file: ../../docker-compose_kafka.yml
+
+  kafka-ui:
+    extends:
+      service: ui
+      file: ../../docker-compose_kafka.yml
+
+volumes:
+  kafka_0_data:
+  kafka_1_data:
+  kafka_2_data:
