@@ -25,3 +25,4 @@ orjson==3.10.7
 bson==0.5.10
 fastapi_pagination==0.12.34
 djangorestframework==3.15.2
+black

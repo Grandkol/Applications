@@ -19,6 +19,8 @@ services:
     environment:
       - POSTGRES_PASSWORD=$DB_PASSWORD
       - POSTGRES_DB=$DB_NAME
+    volumes:
+      - ./database.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d $DB_NAME -U postgres" ]
       interval: 5s
